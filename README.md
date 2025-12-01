@@ -3,7 +3,7 @@
 A modern and responsive coding education website built with React and Tailwind CSS, designed to provide students with an interactive learning experience.
 
 🔗 Live Website:
-https://code-school-jv2j1rw4c-inceprinces-projects.vercel.app/
+https://marvelous-pasca-74b098.netlify.app/
 
 🌟 Features
 
