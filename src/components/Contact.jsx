@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { useTheme } from "../context/ThemeContext";
 
 function Contact() {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const { isDark } = useTheme();
 
   const contactUs = (e) => {
     e.preventDefault();
@@ -17,66 +19,57 @@ function Contact() {
       text: "Thank you for reaching out. We'll get back to you soon!",
       icon: "success",
       confirmButtonColor: "#6C63FF",
-      background: "#f9f9ff",
-      color: "#333",
+      background: isDark ? "#1f2937" : "#f9f9ff",
+      color: isDark ? "#f9fafb" : "#333",
     });
 
-    // reset form
     setFullname("");
     setEmail("");
     setMessage("");
   };
 
+  const inputStyle = {
+    border: `1px solid ${isDark ? "#4b5563" : "#ddd"}`,
+    borderRadius: "6px",
+    padding: "10px",
+    fontSize: "15px",
+    outlineColor: "#6C63FF",
+    background: isDark ? "#374151" : "white",
+    color: isDark ? "#f9fafb" : "#111",
+    width: "100%",
+  };
+
   return (
-    <div>
+    <div className="min-h-screen bg-[#f9f9ff] dark:bg-gray-900 transition-colors duration-300">
       <Navbar />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 32,
-          padding: "64px 5%",
-          flexWrap: "wrap",
-          background: "#f9f9ff",
-          minHeight: "80vh",
-        }}
-      >
+
+      <div className="flex items-center justify-center gap-8 px-[5%] py-16 flex-wrap">
         <img
           src="./Photo/undraw_contact-us_kcoa.svg"
           alt="Contact Illustration"
           style={{ width: "45%", minWidth: "300px" }}
         />
+
         <div
+          className="dark:bg-gray-800 transition-colors duration-300"
           style={{
             width: "45%",
             minWidth: "300px",
-            background: "white",
+            background: isDark ? undefined : "white",
             padding: "40px",
             borderRadius: "12px",
             boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
           }}
         >
           <h2
-            style={{
-              textAlign: "center",
-              marginBottom: "24px",
-              color: "#6C63FF",
-            }}
+            style={{ textAlign: "center", marginBottom: "24px", color: "#6C63FF" }}
           >
             Contact Us
           </h2>
-          <form
-            onSubmit={contactUs}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "20px",
-            }}
-          >
-            {/* Fullname */}
+
+          <form onSubmit={contactUs} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <label style={{ fontSize: "16px", fontWeight: "500" }}>
+              <label className="text-gray-800 dark:text-gray-200" style={{ fontSize: "16px", fontWeight: "500" }}>
                 Full Name
               </label>
               <input
@@ -84,20 +77,13 @@ function Contact() {
                 value={fullname}
                 required
                 placeholder="Enter your full name"
-                style={{
-                  border: "1px solid #ddd",
-                  borderRadius: "6px",
-                  padding: "10px",
-                  fontSize: "15px",
-                  outlineColor: "#6C63FF",
-                }}
                 type="text"
+                style={inputStyle}
               />
             </div>
 
-            {/* Email */}
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <label style={{ fontSize: "16px", fontWeight: "500" }}>
+              <label className="text-gray-800 dark:text-gray-200" style={{ fontSize: "16px", fontWeight: "500" }}>
                 Email
               </label>
               <input
@@ -105,20 +91,13 @@ function Contact() {
                 value={email}
                 required
                 placeholder="example@gmail.com"
-                style={{
-                  border: "1px solid #ddd",
-                  borderRadius: "6px",
-                  padding: "10px",
-                  fontSize: "15px",
-                  outlineColor: "#6C63FF",
-                }}
                 type="email"
+                style={inputStyle}
               />
             </div>
 
-            {/* Message */}
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <label style={{ fontSize: "16px", fontWeight: "500" }}>
+              <label className="text-gray-800 dark:text-gray-200" style={{ fontSize: "16px", fontWeight: "500" }}>
                 Message
               </label>
               <textarea
@@ -127,14 +106,7 @@ function Contact() {
                 required
                 placeholder="Write your message or query here..."
                 rows={4}
-                style={{
-                  border: "1px solid #ddd",
-                  borderRadius: "6px",
-                  padding: "10px",
-                  fontSize: "15px",
-                  outlineColor: "#6C63FF",
-                  resize: "none",
-                }}
+                style={{ ...inputStyle, resize: "none" }}
               />
             </div>
 
@@ -161,6 +133,7 @@ function Contact() {
           </form>
         </div>
       </div>
+
       <Footer />
     </div>
   );
